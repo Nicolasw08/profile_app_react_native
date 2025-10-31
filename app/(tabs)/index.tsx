@@ -1,98 +1,78 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import React from 'react';
+import { Image, ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const [isFollowing, setIsFollowing] = React.useState(false);
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  const profileData = {
+    name: "Nicolas Wannous",
+    title: "Mathematics Teacher & IT student",
+    bio: [
+      "Why did the limit function go to the party?",
+      "Because it could not control its end behavior!",
+      "\nDid you hear about statistician who drowned in the river?",
+      "The river was, on average, only three feet deep."
+    ].join(' ')
+  };
+
+  const handleFollowToggle = () => {
+    setIsFollowing(!isFollowing);
+  };
+
+  return (
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <StatusBar barStyle="dark-content" />
+      {/* Header Title */}
+      <View style={{ width: '100%', backgroundColor: 'white', paddingVertical: 16, borderBottomWidth: 1, borderBottomColor: '#e5e7eb' }}>
+        <Text style={{ fontSize: 22, fontWeight: '600', textAlign: 'center', color: 'black' }}>
+          Facebook Profile
+        </Text>
+      </View>
+      <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 32 }}>
+        <View style={{ width: '100%', maxWidth: 500, alignItems: 'center' }}>
+          {/* Profile Picture */}
+          <Image
+            source={require('../../assets/images/G0423016.jpg')}
+            style={{ width: 140, height: 140, borderRadius: 70, marginBottom: 32 }}
+            resizeMode="cover"
+          />
+          {/* Name and Title */}
+          <Text style={{ fontSize: 28, fontWeight: 'bold', color: 'black', textAlign: 'center', marginBottom: 8 }}>
+            {profileData.name}
+          </Text>
+          <Text style={{ fontSize: 18, color: '#888', textAlign: 'center', marginBottom: 32 }}>
+            {profileData.title}
+          </Text>
+          {/* Bio Section */}
+          <Text style={{ color: '#333', textAlign: 'center', fontSize: 16, lineHeight: 24, marginBottom: 40 }}>
+            {profileData.bio}
+          </Text>
+          {/* Follow Button */}
+          <View style={{ width: '100%', alignItems: 'center' }}>
+            <TouchableOpacity
+              onPress={handleFollowToggle}
+              style={{
+                backgroundColor: isFollowing ? 'lightcoral' : '#0095F6',
+                paddingHorizontal: 0,
+                paddingVertical: 12,
+                borderRadius: 24,
+                width: '100%',
+                maxWidth: 400,
+                alignItems: 'center',
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.1,
+                shadowRadius: 4,
+                elevation: 2,
+              }}
+            >
+              <Text style={{ color: 'white', fontSize: 18, fontWeight: '600' }}>
+                {isFollowing ? 'Unfollow' : 'Follow'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
