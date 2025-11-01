@@ -21,15 +21,27 @@ export default function HomeScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar backgroundColor="white" barStyle="dark-content" />
       {/* Header Title */}
-      <View style={{ width: '100%', backgroundColor: 'white', paddingVertical: 16, borderBottomWidth: 1, borderBottomColor: '#e5e7eb' }}>
+      <View style={{ 
+        width: '100%', 
+        backgroundColor: 'white', 
+        paddingVertical: 16, 
+        borderBottomWidth: 1, 
+        borderBottomColor: '#e5e7eb',
+        elevation: 0
+      }}>
         <Text style={{ fontSize: 22, fontWeight: '600', textAlign: 'center', color: 'black' }}>
           Facebook Profile
         </Text>
       </View>
-      <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 32 }}>
-        <View style={{ width: '100%', maxWidth: 500, alignItems: 'center' }}>
+      <ScrollView 
+        contentContainerStyle={{ 
+          paddingVertical: 32,
+          paddingHorizontal: 16
+        }}
+      >
+        <View style={{ alignItems: 'center' }}>
           {/* Profile Picture */}
           <Image
             source={require('../../assets/images/G0423016.jpg')}
@@ -48,21 +60,16 @@ export default function HomeScreen() {
             {profileData.bio}
           </Text>
           {/* Follow Button */}
-          <View style={{ width: '100%', alignItems: 'center' }}>
+          <View style={{ paddingHorizontal: 16, width: '100%', maxWidth: 400, alignSelf: 'center' }}>
             <TouchableOpacity
               onPress={handleFollowToggle}
+              activeOpacity={0.8}
               style={{
                 backgroundColor: isFollowing ? 'lightcoral' : '#0095F6',
-                paddingHorizontal: 0,
                 paddingVertical: 12,
                 borderRadius: 24,
                 width: '100%',
-                maxWidth: 400,
                 alignItems: 'center',
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.1,
-                shadowRadius: 4,
                 elevation: 2,
               }}
             >
